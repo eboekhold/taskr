@@ -1,27 +1,14 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
-interface Task {
-  id: number;
-  name: string;
-  isComplete: boolean;
-}
+import { Tasks } from './tasks/tasks';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, Tasks],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
-export class App implements OnInit {
-  private http = inject(HttpClient);
-  tasks = signal<Task[]>([]);
-
-  ngOnInit(): void {
-    this.http.get<Task[]>('/api/Tasks')
-      .subscribe(data => this.tasks.set(data));
-  }
-
-  protected readonly title = signal('TaskrClient');
+export class App {
+  protected readonly title = signal('Taskr');
 }

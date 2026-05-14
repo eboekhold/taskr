@@ -1,23 +1,4 @@
 <h1>Tasks</h1>
-@if (tasks().length > 0) {
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Is Complete</th>
-    </tr>
-  </thead>
-  <tbody>
-    @for (f of tasks(); track f.id) {
-    <tr>
-      <td>{{ f.name }}</td>
-      <td>{{ f.isComplete }}</td>
-    </tr>
-    }
-  </tbody>
-</table>
-} @else {
-<p>Loading Tasks... (or no tasks found)</p>
-}
+<app-tasks />
 
 <router-outlet />
