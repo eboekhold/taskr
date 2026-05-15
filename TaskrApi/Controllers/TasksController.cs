@@ -10,7 +10,7 @@ using TaskrApi.Models;
 
 namespace TaskrApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Tasks")]
     [ApiController]
     public class TasksController : ControllerBase
     {
@@ -37,6 +37,28 @@ namespace TaskrApi.Controllers
             if (task == null)
             {
                 return NotFound();
+            }
+
+            return task;
+        }
+
+        // GET: api/Tasks/random
+        [HttpGet("random")]
+        public async Task<ActionResult<Models.Task>> GetRandomTask()
+        {
+            var minId = await _context.Tasks.MinAsync(t => t.Id);
+            var maxId = await _context.Tasks.MaxAsync(t => t.Id);
+
+            if (minId == 0 && maxId == 0)
+                return NotFound();
+
+            var random = Random.Shared;
+            TaskrApi.Models.Task? task = null;
+
+            while (task == null)
+            {
+                var id = random.NextInt64(minId, maxId + 1);
+                task = await _context.Tasks.FirstOrDefaultAsync(t => t.Id == id);
             }
 
             return task;
