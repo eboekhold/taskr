@@ -55,3 +55,6 @@ nunit-*.xml
 
 # VSCode
 *.sln
+
+# C# Dev Kit
+*.lscache

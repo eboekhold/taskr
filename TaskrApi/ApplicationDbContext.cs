@@ -10,5 +10,10 @@ namespace Taskr.Data
     {
     }
     public DbSet<TaskrApi.Models.Task> Tasks { get; set; } = null!;
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+      => optionsBuilder
+          .UseSeeding((context, _) =>
+            DatabaseSeeder.Seed((ApplicationDbContext)context));
   }
 }
