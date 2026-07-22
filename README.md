@@ -5,6 +5,7 @@ Task manager for meatspace activities.
 - ASP.net
 - Microsoft SQL Server
 - Angular
+- Docker (only for testing)
 
 ## Setup
 
@@ -22,6 +23,16 @@ Create the database
 Trust the self-signed certificate for https support (optional):
 ```
 > dotnet dev-certs https --trust
+```
+
+## Testing
+
+Ensure you have Docker running. 
+
+Then:
+```
+cd TaskrApi.Tests
+dotnet test
 ```
 
 ## Running the application
