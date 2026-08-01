@@ -10,12 +10,5 @@ namespace TaskrApi.Data
     {
     }
     public DbSet<TaskrApi.Models.Task> Tasks { get; set; } = null!;
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-      => optionsBuilder
-          .UseSeeding((context, _) =>
-            DatabaseSeeder.Seed((ApplicationDbContext)context))
-          .UseAsyncSeeding(async (context, _, _) =>
-            await DatabaseSeeder.SeedAsync((ApplicationDbContext)context));
   }
 }

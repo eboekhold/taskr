@@ -51,4 +51,18 @@ app.UseAuthorization();
 app.MapIdentityApi<IdentityUser>();
 app.MapControllers();
 
+// Seed the database if it does not contain any tasks.
+if (app.Environment.IsDevelopment())
+{
+    using var scope = app.Services.CreateScope();
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    await db.Database.EnsureCreatedAsync();
+
+    var testTask = await db.Tasks.FirstOrDefaultAsync();
+    if (testTask == null)
+    {
+        DatabaseSeeder.Seed(db);
+    }
+}
+
 app.Run();
