@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Taskr.Data
+namespace TaskrApi.Data
 {
   public class ApplicationDbContext : IdentityDbContext
   {

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Taskr.Data;
+using TaskrApi.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 

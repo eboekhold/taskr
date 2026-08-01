@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Taskr.Data;
+using TaskrApi.Data;
 
 public class TestApiFactory : WebApplicationFactory<Program>
 {

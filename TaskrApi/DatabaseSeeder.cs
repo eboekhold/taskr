@@ -1,6 +1,6 @@
 using Bogus;
 using Microsoft.EntityFrameworkCore;
-using Taskr.Data;
+using TaskrApi.Data;
 
 public static class DatabaseSeeder
 {
