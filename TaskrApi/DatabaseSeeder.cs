@@ -1,11 +1,14 @@
 using Bogus;
+using Microsoft.EntityFrameworkCore;
 using Taskr.Data;
 
 public static class DatabaseSeeder
 {
-  public static void Seed(ApplicationDbContext context)
+  public static void Seed(ApplicationDbContext context) => SeedAsync(context).GetAwaiter().GetResult();
+
+  public static async Task SeedAsync(ApplicationDbContext context)
   {
-    if (!context.Tasks.Any())
+    if (!await context.Tasks.AnyAsync())
     {
       var taskFaker = new Faker<TaskrApi.Models.Task>()
         .RuleFor(t => t.Name, f => f.Hacker.Phrase())
@@ -14,7 +17,7 @@ public static class DatabaseSeeder
       var tasks = taskFaker.Generate(50);
 
       context.Tasks.AddRange(tasks);
-      context.SaveChanges();
+      await context.SaveChangesAsync();
     }
   }
 }

@@ -14,6 +14,8 @@ namespace Taskr.Data
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
       => optionsBuilder
           .UseSeeding((context, _) =>
-            DatabaseSeeder.Seed((ApplicationDbContext)context));
+            DatabaseSeeder.Seed((ApplicationDbContext)context))
+          .UseAsyncSeeding(async (context, _, _) =>
+            await DatabaseSeeder.SeedAsync((ApplicationDbContext)context));
   }
 }
