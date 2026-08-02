@@ -1,22 +1,16 @@
 using System.Net.Http.Json;
 
-public class TasksApiTests : IClassFixture<SqlServerContainerFixture>
+[Collection("TasksTests")]
+public class TasksApiTests(TestApiFactory factory)
 {
-  private readonly HttpClient _client;
-
-  public TasksApiTests(SqlServerContainerFixture fixture)
-  {
-    var factory = new TestApiFactory(fixture._msSqlContainer.GetConnectionString());
-    _client = factory.CreateClient();
-  }
-
   [Fact]
   public async Task Can_Create_Task()
   {
-    var response = await _client.PostAsJsonAsync("/api/tasks", new { Name = "Cadeautje kopen" });
+    var response = await factory.HttpClient.PostAsJsonAsync("/api/tasks", new { Name = "Cadeautje kopen" });
     response.EnsureSuccessStatusCode();
 
-    var tasks = await _client.GetFromJsonAsync<List<TaskrApi.Models.Task>>("/api/tasks");
+    var tasks = await factory.HttpClient.GetFromJsonAsync<List<TaskrApi.Models.Task>>("/api/tasks");
+
     Assert.Contains(tasks, t => t.Name == "Cadeautje kopen");
   }
 }
