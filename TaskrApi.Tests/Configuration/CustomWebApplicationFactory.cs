@@ -5,13 +5,13 @@ using Microsoft.Extensions.DependencyInjection;
 using TaskrApi.Data;
 using Testcontainers.MsSql;
 
-public class TestApiFactory : WebApplicationFactory<Program>, IAsyncLifetime
+public class CustomWebApplicationFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {
   private readonly MsSqlContainer _msSqlContainer;
 
   public HttpClient HttpClient { get; private set; } = null!;
 
-  public TestApiFactory()
+  public CustomWebApplicationFactory()
   {
     _msSqlContainer = new MsSqlBuilder("mcr.microsoft.com/mssql/server:2025-CU7-ubuntu-24.04")
       .WithPassword("My_strong_password123!") // Not a real password, only used within the docker container during testing runs.

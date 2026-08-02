@@ -1,7 +1,7 @@
 using System.Net.Http.Json;
 
 [Collection("TasksTests")]
-public class TasksApiTests(TestApiFactory factory)
+public class TasksApiTests(CustomWebApplicationFactory factory)
 {
   [Fact]
   public async Task Can_Create_Task()
