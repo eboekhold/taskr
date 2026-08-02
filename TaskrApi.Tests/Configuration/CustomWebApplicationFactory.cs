@@ -1,13 +1,18 @@
+using System.Data.Common;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using TaskrApi.Data;
+using Respawn;
 using Testcontainers.MsSql;
+using TaskrApi.Data;
 
 public class CustomWebApplicationFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {
   private readonly MsSqlContainer _msSqlContainer;
+  private DbConnection _dbConnection = null!;
+  private Respawner _respawner = null!;
 
   public HttpClient HttpClient { get; private set; } = null!;
 
@@ -21,12 +26,24 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>, IAsyn
   public async ValueTask InitializeAsync()
   {
     await _msSqlContainer.StartAsync();
+
+    _dbConnection = new SqlConnection(_msSqlContainer.GetConnectionString());
+
     HttpClient = CreateClient();
+
+    await _dbConnection.OpenAsync();
+    await InitializeRespawnerAsync();
   }
 
   public new async Task DisposeAsync()
   {
     await _msSqlContainer.DisposeAsync();
+    await _dbConnection.CloseAsync();
+  }
+
+  public async Task ResetDatabaseAsync()
+  {
+    await _respawner.ResetAsync(_dbConnection);
   }
 
   protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -45,6 +62,14 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>, IAsyn
       using var scope = services.BuildServiceProvider().CreateScope();
       var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
       db.Database.Migrate();
+    });
+  }
+
+  private async Task InitializeRespawnerAsync()
+  {
+    _respawner = await Respawner.CreateAsync(_dbConnection, new RespawnerOptions
+    {
+      SchemasToInclude = ["dbo"],
     });
   }
 }

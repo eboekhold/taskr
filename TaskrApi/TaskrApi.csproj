@@ -23,6 +23,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="10.0.2" /> <!-- Once this is updated maybe we can remove NuGet packages-->
     <PackageReference Include="NuGet.Packaging" Version="7.6.0" /> <!-- One of our other packages to 6.12.1 but that version has a low severity vulnerability -->
     <PackageReference Include="NuGet.Protocol" Version="7.6.0" /> <!-- Maybe it's https://github.com/dotnet/Scaffolding/issues/3724 -->
+    <PackageReference Include="Respawn" Version="7.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="10.2.3" />
   </ItemGroup>
 
