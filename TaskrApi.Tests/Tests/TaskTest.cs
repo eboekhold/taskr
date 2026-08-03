@@ -47,6 +47,37 @@ public class TasksApiTests(CustomWebApplicationFactory factory) : IAsyncLifetime
   }
 
   [Fact]
+  public async Task GetTask_WhenOneExists_ReturnsTask()
+  {
+    // Arrange
+    using var scope = factory.Services.CreateScope();
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+    var existingTask = db.Tasks.Add(new TaskrApi.Models.Task { Name = "Cadeautje kopen" });
+    await db.SaveChangesAsync(TestContext.Current.CancellationToken);
+
+    // Act
+    var response = await factory.HttpClient.GetAsync($"/api/tasks/{existingTask.Entity.Id}", TestContext.Current.CancellationToken);
+
+    // Assert
+    response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+    var task = await response.Content.ReadFromJsonAsync<TaskrApi.Models.Task>(TestContext.Current.CancellationToken);
+    task.Should().NotBeNull();
+    task.Name.Should().Be("Cadeautje kopen");
+  }
+
+  [Fact]
+  public async Task GetTask_WhenNotFound_ReturnsNotFound()
+  {
+    // Act
+    var response = await factory.HttpClient.GetAsync("/api/tasks/1", TestContext.Current.CancellationToken);
+
+    // Assert
+    response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+  }
+
+  [Fact]
   public async Task PutTask_WhenOneExists_ReturnsUpdatedTask()
   {
     // Arrange
