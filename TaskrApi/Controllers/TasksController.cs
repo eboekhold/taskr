@@ -92,7 +92,7 @@ namespace TaskrApi.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok(task);
         }
 
         // POST: api/Tasks
