@@ -9,21 +9,18 @@ public class TasksApiTests(CustomWebApplicationFactory factory) : IAsyncLifetime
   public async ValueTask DisposeAsync() => await factory.ResetDatabaseAsync();
 
   [Fact]
-  public async Task Can_Create_Task()
+  public async Task GetTasks_WhenNoneExist_ReturnsEmptyList()
   {
-    // Act
-    var response = await factory.HttpClient.PostAsJsonAsync("/api/tasks", new { Name = "Cadeautje kopen" }, TestContext.Current.CancellationToken);
-    var tasks = await factory.HttpClient.GetFromJsonAsync<List<TaskrApi.Models.Task>>("/api/tasks", TestContext.Current.CancellationToken);
-
-    // Assert
+    var response = await factory.HttpClient.GetAsync("/api/tasks", TestContext.Current.CancellationToken);
     response.EnsureSuccessStatusCode();
+
+    var tasks = await response.Content.ReadFromJsonAsync<List<TaskrApi.Models.Task>>(TestContext.Current.CancellationToken);
     Assert.NotNull(tasks);
-    Assert.Contains(tasks, t => t.Name == "Cadeautje kopen");
-    Assert.True(tasks.Count == 1);
+    Assert.Empty(tasks);
   }
 
   [Fact]
-  public async Task Can_Get_Tasks()
+  public async Task GetTasks_WhenOneExists_ReturnsOneTask()
   {
     // Arrange
     using var scope = factory.Services.CreateScope();
@@ -39,5 +36,19 @@ public class TasksApiTests(CustomWebApplicationFactory factory) : IAsyncLifetime
     var tasks = await response.Content.ReadFromJsonAsync<List<TaskrApi.Models.Task>>(TestContext.Current.CancellationToken);
     Assert.NotNull(tasks);
     Assert.Contains(tasks, t => t.Name == "Cadeautje kopen");
+  }
+
+  [Fact]
+  public async Task CreateTask()
+  {
+    // Act
+    var response = await factory.HttpClient.PostAsJsonAsync("/api/tasks", new { Name = "Cadeautje kopen" }, TestContext.Current.CancellationToken);
+    var tasks = await factory.HttpClient.GetFromJsonAsync<List<TaskrApi.Models.Task>>("/api/tasks", TestContext.Current.CancellationToken);
+
+    // Assert
+    response.EnsureSuccessStatusCode();
+    Assert.NotNull(tasks);
+    Assert.Contains(tasks, t => t.Name == "Cadeautje kopen");
+    Assert.True(tasks.Count == 1);
   }
 }
