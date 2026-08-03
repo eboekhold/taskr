@@ -1,12 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TaskrApi.Data;
-using TaskrApi.Models;
 
 namespace TaskrApi.Controllers
 {
@@ -46,22 +40,16 @@ namespace TaskrApi.Controllers
         [HttpGet("random")]
         public async Task<ActionResult<Models.Task>> GetRandomTask()
         {
-            var minId = await _context.Tasks.MinAsync(t => t.Id);
-            var maxId = await _context.Tasks.MaxAsync(t => t.Id);
+            var randomTask = _context.Tasks.OrderBy(t => Guid.NewGuid()).Take(1);
 
-            if (minId == 0 && maxId == 0)
-                return NotFound();
-
-            var random = Random.Shared;
-            TaskrApi.Models.Task? task = null;
-
-            while (task == null)
+            if (randomTask.Count() == 1)
             {
-                var id = random.NextInt64(minId, maxId + 1);
-                task = await _context.Tasks.FirstOrDefaultAsync(t => t.Id == id);
+                return await randomTask.FirstAsync();
             }
-
-            return task;
+            else
+            {
+                return NotFound();
+            }
         }
 
         // PUT: api/Tasks/5
