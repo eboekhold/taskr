@@ -1,3 +1,4 @@
+using System.Net;
 using System.Net.Http.Json;
 using Microsoft.Extensions.DependencyInjection;
 using FluentAssertions;
@@ -12,8 +13,11 @@ public class TasksApiTests(CustomWebApplicationFactory factory) : IAsyncLifetime
   [Fact]
   public async Task GetTasks_WhenNoneExist_ReturnsEmptyList()
   {
+    // Act
     var response = await factory.HttpClient.GetAsync("/api/tasks", TestContext.Current.CancellationToken);
-    response.EnsureSuccessStatusCode();
+
+    // Assert
+    response.StatusCode.Should().Be(HttpStatusCode.OK);
 
     var tasks = await response.Content.ReadFromJsonAsync<List<TaskrApi.Models.Task>>(TestContext.Current.CancellationToken);
     tasks.Should().NotBeNull();
@@ -30,9 +34,11 @@ public class TasksApiTests(CustomWebApplicationFactory factory) : IAsyncLifetime
     db.Tasks.Add(new TaskrApi.Models.Task { Name = "Cadeautje kopen" });
     await db.SaveChangesAsync(TestContext.Current.CancellationToken);
 
-    // Act & Assert
+    // Act
     var response = await factory.HttpClient.GetAsync("/api/tasks", TestContext.Current.CancellationToken);
-    response.EnsureSuccessStatusCode();
+
+    // Assert
+    response.StatusCode.Should().Be(HttpStatusCode.OK);
 
     var tasks = await response.Content.ReadFromJsonAsync<List<TaskrApi.Models.Task>>(TestContext.Current.CancellationToken);
     tasks.Should().NotBeNull();
@@ -45,10 +51,11 @@ public class TasksApiTests(CustomWebApplicationFactory factory) : IAsyncLifetime
   {
     // Act
     var response = await factory.HttpClient.PostAsJsonAsync("/api/tasks", new { Name = "Cadeautje kopen" }, TestContext.Current.CancellationToken);
-    var task = await response.Content.ReadFromJsonAsync<TaskrApi.Models.Task>(TestContext.Current.CancellationToken);
 
     // Assert
-    response.EnsureSuccessStatusCode();
+    response.StatusCode.Should().Be(HttpStatusCode.Created);
+
+    var task = await response.Content.ReadFromJsonAsync<TaskrApi.Models.Task>(TestContext.Current.CancellationToken);
     task.Should().NotBeNull();
     task.Name.Should().Be("Cadeautje kopen");
   }
