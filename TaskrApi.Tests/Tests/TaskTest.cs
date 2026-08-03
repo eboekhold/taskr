@@ -1,5 +1,6 @@
 using System.Net.Http.Json;
 using Microsoft.Extensions.DependencyInjection;
+using FluentAssertions;
 using TaskrApi.Data;
 
 [Collection("TasksTests")]
@@ -15,8 +16,8 @@ public class TasksApiTests(CustomWebApplicationFactory factory) : IAsyncLifetime
     response.EnsureSuccessStatusCode();
 
     var tasks = await response.Content.ReadFromJsonAsync<List<TaskrApi.Models.Task>>(TestContext.Current.CancellationToken);
-    Assert.NotNull(tasks);
-    Assert.Empty(tasks);
+    tasks.Should().NotBeNull();
+    tasks.Should().BeEmpty();
   }
 
   [Fact]
@@ -34,8 +35,9 @@ public class TasksApiTests(CustomWebApplicationFactory factory) : IAsyncLifetime
     response.EnsureSuccessStatusCode();
 
     var tasks = await response.Content.ReadFromJsonAsync<List<TaskrApi.Models.Task>>(TestContext.Current.CancellationToken);
-    Assert.NotNull(tasks);
-    Assert.Contains(tasks, t => t.Name == "Cadeautje kopen");
+    tasks.Should().NotBeNull();
+    tasks.Should().ContainSingle();
+    tasks.Should().OnlyContain(t => t.Name == "Cadeautje kopen");
   }
 
   [Fact]
@@ -43,12 +45,11 @@ public class TasksApiTests(CustomWebApplicationFactory factory) : IAsyncLifetime
   {
     // Act
     var response = await factory.HttpClient.PostAsJsonAsync("/api/tasks", new { Name = "Cadeautje kopen" }, TestContext.Current.CancellationToken);
-    var tasks = await factory.HttpClient.GetFromJsonAsync<List<TaskrApi.Models.Task>>("/api/tasks", TestContext.Current.CancellationToken);
+    var task = await response.Content.ReadFromJsonAsync<TaskrApi.Models.Task>(TestContext.Current.CancellationToken);
 
     // Assert
     response.EnsureSuccessStatusCode();
-    Assert.NotNull(tasks);
-    Assert.Contains(tasks, t => t.Name == "Cadeautje kopen");
-    Assert.True(tasks.Count == 1);
+    task.Should().NotBeNull();
+    task.Name.Should().Be("Cadeautje kopen");
   }
 }
