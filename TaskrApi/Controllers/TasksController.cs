@@ -40,16 +40,16 @@ namespace TaskrApi.Controllers
         [HttpGet("random")]
         public async Task<ActionResult<Models.Task>> GetRandomTask()
         {
-            var randomTask = _context.Tasks.OrderBy(t => Guid.NewGuid()).Take(1);
+            var randomTask = await _context.Tasks
+                                           .OrderBy(t => Guid.NewGuid())
+                                           .FirstOrDefaultAsync();
 
-            if (randomTask.Count() == 1)
-            {
-                return await randomTask.FirstAsync();
-            }
-            else
+            if (randomTask == null)
             {
                 return NotFound();
             }
+
+            return randomTask;
         }
 
         // PUT: api/Tasks/5
