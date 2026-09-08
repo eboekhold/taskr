@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { TaskListItem } from '../task-list-item/task-list-item';
 import { Task } from '../app';
+import { TaskListItem } from '../task-list-item/task-list-item';
 
 @Component({
   selector: 'task-list',

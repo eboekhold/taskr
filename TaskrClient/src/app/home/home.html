@@ -1,6 +1,5 @@
 @if (task != null) {
-<h1>{{ task()?.name }}</h1>
-<p>Complete: {{ task()?.isComplete }}</p>
+<task-details [task]="task()"></task-details>
 } @else {
 <p>Loading Task (or no tasks found)</p>
 }

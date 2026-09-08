@@ -1,10 +1,11 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, inject, OnInit, signal } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Task } from '../app';
+import { TaskDetails } from '../task-details/task-details';
 
 @Component({
   selector: 'app-home',
-  imports: [],
+  imports: [TaskDetails],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
