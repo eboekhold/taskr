@@ -3,11 +3,11 @@ import { Task } from '../app';
 
 
 @Component({
-  selector: 'tr[task-item]',
+  selector: 'tr[task-list-item]',
   imports: [],
-  templateUrl: './task-item.html',
-  styleUrl: './task-item.scss',
+  templateUrl: './task-list-item.html',
+  styleUrl: './task-list-item.scss',
 })
-export class TaskItem {
+export class TaskListItem {
   task = input<Task>();
 }

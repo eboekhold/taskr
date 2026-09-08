@@ -1,11 +1,11 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { TaskItem } from '../task-item/task-item';
+import { TaskListItem } from '../task-list-item/task-list-item';
 import { Task } from '../app';
 
 @Component({
   selector: 'task-list',
-  imports: [TaskItem],
+  imports: [TaskListItem],
   templateUrl: './task-list.html',
   styleUrl: './task-list.scss',
 })
