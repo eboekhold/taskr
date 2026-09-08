@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { RandomTaskPage } from './random-task-page/random-task-page';
 import { Tasks } from './tasks/tasks';
+import { TaskPage } from './task-page/task-page';
 
 export const routes: Routes = [
   {
@@ -10,5 +11,9 @@ export const routes: Routes = [
   {
     path: 'tasks',
     component: Tasks,
+  },
+  {
+    path: 'tasks/:id',
+    component: TaskPage,
   }
 ];
