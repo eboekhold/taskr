@@ -15,5 +15,9 @@ export const routes: Routes = [
   {
     path: 'tasks/:id',
     component: TaskPage,
+  },
+  {
+    path: 'tasks/random',
+    component: RandomTaskPage,
   }
 ];
