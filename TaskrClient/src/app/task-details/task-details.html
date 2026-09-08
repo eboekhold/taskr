@@ -1,2 +1,5 @@
 <h1>{{ task()?.name }}</h1>
-<p>Complete: {{ task()?.isComplete }}</p>
+<div>
+  <input type="checkbox" [checked]="task()?.isComplete" (change)="onCompletedChanged($event)">
+  <label>Complete</label>
+</div>
