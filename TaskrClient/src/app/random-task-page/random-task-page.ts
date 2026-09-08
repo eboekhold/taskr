@@ -11,8 +11,10 @@ import { TaskDetails } from '../task-details/task-details';
 })
 export class RandomTaskPage implements OnInit {
   private http = inject(HttpClient);
+
   task = signal<Task | null>(null);
 
+  // Get a random task from the API.
   ngOnInit(): void {
     this.http.get<Task>('/api/Tasks/random')
       .subscribe(data => this.task.set(data));
