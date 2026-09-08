@@ -1,2 +1,6 @@
-<td>{{ task()?.name }}</td>
-<td>{{ task()?.isComplete }}</td>
+<td>
+  <a [routerLink]="[task()?.id]">{{ task()?.name }}</a>
+</td>
+<td>
+  {{ task()?.isComplete }}
+</td>
