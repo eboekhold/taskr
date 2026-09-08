@@ -4,12 +4,12 @@ import { Task } from '../app';
 import { TaskDetails } from '../task-details/task-details';
 
 @Component({
-  selector: 'app-home',
+  selector: 'random-task-page',
   imports: [TaskDetails],
-  templateUrl: './home.html',
-  styleUrl: './home.scss',
+  templateUrl: './random-task-page.html',
+  styleUrl: './random-task-page.scss',
 })
-export class Home implements OnInit {
+export class RandomTaskPage implements OnInit {
   private http = inject(HttpClient);
   task = signal<Task | null>(null);
 

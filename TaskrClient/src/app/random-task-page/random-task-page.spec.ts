@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Home } from './home';
+import { RandomTaskPage } from './random-task-page';
 
-describe('Home', () => {
-  let component: Home;
-  let fixture: ComponentFixture<Home>;
+describe('RandomTaskPage', () => {
+  let component: RandomTaskPage;
+  let fixture: ComponentFixture<RandomTaskPage>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Home],
+      imports: [RandomTaskPage],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(Home);
+    fixture = TestBed.createComponent(RandomTaskPage);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

@@ -1,11 +1,11 @@
 import { Routes } from '@angular/router';
+import { RandomTaskPage } from './random-task-page/random-task-page';
 import { Tasks } from './tasks/tasks';
-import { Home } from './home/home';
 
 export const routes: Routes = [
   {
     path: '',
-    component: Home,
+    component: RandomTaskPage,
   },
   {
     path: 'tasks',
