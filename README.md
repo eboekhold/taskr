@@ -1,5 +1,5 @@
 # Taskr
-Task manager for meatspace activities.
+Simple task manager.
 
 ## Requirements
 - ASP.net
@@ -9,6 +9,25 @@ Task manager for meatspace activities.
 
 ## Setup
 
+### Install packages
+
+#### Backend:
+No additional input required, does so automatically when `dotnet run` is called.
+
+#### Frontend:
+```
+cd TaskrClient
+npm install
+```
+
+#### E2E Testing:
+> Make sure you're in the root directory of the project.
+
+```
+npm install
+```
+
+### Database
 Initialise database connection string secret:
 ```
 > dotnet user-secrets init
@@ -27,26 +46,37 @@ Trust the self-signed certificate for https support (optional):
 
 ## Testing
 
-Ensure you have Docker running. 
+#### Backend:
+> Ensure you have Docker running. 
 
-Then:
 ```
-cd TaskrApi.Tests
-dotnet test
+dotnet test --project TaskrApi.Tests
+```
+
+#### Frontend:
+```
+cd TaskrClient
+ng test
+```
+
+#### End to end:
+> Ensure you have Docker running. 
+
+> This runs on the local database, so please make sure it's empty. You can do this by sending a POST request to the `test/reset-db` endpoint using the Swagger UI.
+```
+npx playwright test
 ```
 
 ## Running the application
-
-Server:
+#### Server:
 ```
-> cd TaskrApi
-> dotnet run
+> dotnet run --project TaskrApi
 
 # with https:
-> dotnet run --launch-profile https
+> dotnet run --project TaskrApi --launch-profile https
 ```
 
-Client:
+#### Client:
 ```
 > cd TaskrClient
 > ng serve

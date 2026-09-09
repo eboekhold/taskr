@@ -1,0 +1,23 @@
+{
+  "name": "taskr",
+  "version": "1.0.0",
+  "description": "Simple task manager.",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eboekhold/nettify.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/eboekhold/nettify/issues"
+  },
+  "homepage": "https://github.com/eboekhold/nettify#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^26.5.0"
+  }
+}

@@ -1,5 +1,5 @@
-@if (task != null) {
+@if (task() != null) {
 <task-details [task]="task()"></task-details>
 } @else {
-<p>Loading Task (or no tasks found)</p>
+<p>Loading Task (or task not found)</p>
 }
