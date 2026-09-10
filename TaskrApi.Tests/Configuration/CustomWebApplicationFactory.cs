@@ -1,49 +1,32 @@
-using System.Data.Common;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Respawn;
-using Testcontainers.MsSql;
 using TaskrApi.Data;
 
 public class CustomWebApplicationFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {
-  private readonly MsSqlContainer _msSqlContainer;
-  private DbConnection _dbConnection = null!;
-  private Respawner _respawner = null!;
+  private readonly TestDatabaseManager _dbManager = new();
 
   public HttpClient HttpClient { get; private set; } = null!;
 
-  public CustomWebApplicationFactory()
-  {
-    _msSqlContainer = new MsSqlBuilder("mcr.microsoft.com/mssql/server:2025-CU7-ubuntu-24.04")
-      .WithPassword("My_strong_password123!") // Not a real password, only used within the docker container during testing runs.
-      .Build();
-  }
-
   public async ValueTask InitializeAsync()
   {
-    await _msSqlContainer.StartAsync();
-
-    _dbConnection = new SqlConnection(_msSqlContainer.GetConnectionString());
+    await _dbManager.StartContainerAsync();
+    await _dbManager.SetupDatabaseAsync();
+    await _dbManager.SetCheckpointAsync();
 
     HttpClient = CreateClient();
-
-    await _dbConnection.OpenAsync();
-    await InitializeRespawnerAsync();
   }
 
   public new async Task DisposeAsync()
   {
-    await _msSqlContainer.DisposeAsync();
-    await _dbConnection.CloseAsync();
+    await _dbManager.DisposeAsync();
   }
 
   public async Task ResetDatabaseAsync()
   {
-    await _respawner.ResetAsync(_dbConnection);
+    await _dbManager.RestoreCheckpointAsync();
   }
 
   protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -56,20 +39,7 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>, IAsyn
       services.Remove(services.Single(service => service.ServiceType == typeof(DbContextOptions<ApplicationDbContext>)));
 
       // Add Testcontainers MSSQL DbContext
-      services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(_msSqlContainer.GetConnectionString()));
-
-      // Apply migrations
-      using var scope = services.BuildServiceProvider().CreateScope();
-      var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-      db.Database.Migrate();
-    });
-  }
-
-  private async Task InitializeRespawnerAsync()
-  {
-    _respawner = await Respawner.CreateAsync(_dbConnection, new RespawnerOptions
-    {
-      SchemasToInclude = ["dbo"],
+      services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(_dbManager.ConnectionString));
     });
   }
 }
