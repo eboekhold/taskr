@@ -12,7 +12,7 @@ import { defineConfig, devices } from '@playwright/test';
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  testDir: './e2e',
+  testDir: './TaskrApi.E2E/Tests',
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -26,7 +26,7 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
-    baseURL: 'http://localhost:4200',
+    baseURL: 'http://localhost:4205',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
@@ -76,14 +76,14 @@ export default defineConfig({
   webServer: [
     {
       name: 'api',
-      command: 'dotnet run --project TaskrApi --launch-profile e2e',
-      url: 'http://localhost:5257/health',
+      command: 'dotnet run --project TaskrApi.E2E/TaskrApi.E2E.csproj',
+      url: 'http://localhost:5005/health',
       reuseExistingServer: !process.env.CI,
     },
     {
       name: 'app',
-      command: 'cd TaskrClient && ng serve',
-      url: 'http://localhost:4200',
+      command: 'cd TaskrClient && npm run start:e2e',
+      url: 'http://localhost:4205',
       reuseExistingServer: !process.env.CI,
     },
   ],

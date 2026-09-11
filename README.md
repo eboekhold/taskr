@@ -62,7 +62,6 @@ ng test
 #### End to end:
 > Ensure you have Docker running. 
 
-> This runs on the local database, so please make sure it's empty. You can do this by sending a POST request to the `test/reset-db` endpoint using the Swagger UI.
 ```
 npx playwright test
 ```
@@ -79,7 +78,7 @@ npx playwright test
 #### Client:
 ```
 > cd TaskrClient
-> ng serve
+> npm run start
 ```
 
 Navigate to `http://localhost:4200/` to view the application.
