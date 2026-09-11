@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TaskrApi\TaskrApi.csproj" />
+    <ProjectReference Include="..\TaskrApi.TestInfrastructure\TaskrApi.TestInfrastructure.csproj" />
   </ItemGroup>
 
 </Project>
