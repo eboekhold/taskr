@@ -46,11 +46,11 @@ Trust the self-signed certificate for https support (optional):
 
 ## Testing
 
-#### Backend:
+#### Backend/API:
 > Ensure you have Docker running. 
 
 ```
-dotnet test --project TaskrApi.Tests
+dotnet test --project TaskrApi.Integration
 ```
 
 #### Frontend:
