@@ -12,7 +12,7 @@ import { defineConfig, devices } from '@playwright/test';
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  testDir: './TaskrApi.E2E/Tests',
+  testDir: './TaskrApi.Testing/E2E/Tests',
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -76,7 +76,7 @@ export default defineConfig({
   webServer: [
     {
       name: 'api',
-      command: 'dotnet run --project TaskrApi.E2E/TaskrApi.E2E.csproj',
+      command: 'dotnet run --project TaskrApi.Testing/E2E/E2E.csproj',
       url: 'http://localhost:5005/health',
       reuseExistingServer: !process.env.CI,
     },

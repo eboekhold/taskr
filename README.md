@@ -50,7 +50,7 @@ Trust the self-signed certificate for https support (optional):
 > Ensure you have Docker running. 
 
 ```
-dotnet test --project TaskrApi.Integration
+dotnet test --project TaskrApi.Testing/Integration
 ```
 
 #### Frontend:

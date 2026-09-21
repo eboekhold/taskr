@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TaskrApi\TaskrApi.csproj" />
-    <ProjectReference Include="..\TaskrApi.TestInfrastructure\TaskrApi.TestInfrastructure.csproj" />
+    <ProjectReference Include="..\..\TaskrApi\TaskrApi.csproj" />
+    <ProjectReference Include="..\TestInfrastructure\TestInfrastructure.csproj" />
   </ItemGroup>
 
 </Project>
