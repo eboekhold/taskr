@@ -20,7 +20,7 @@ cd TaskrClient
 npm install
 ```
 
-#### E2E Testing:
+#### End to End Testing:
 > Make sure you're in the root directory of the project.
 
 ```
