@@ -3,22 +3,22 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 
 import { mockTaskList } from '../../test/task.fixtures';
 
-import { Tasks } from './tasks';
+import { TasksPage } from './tasks-page';
 
-describe('Tasks', () => {
-  let component: Tasks;
-  let fixture: ComponentFixture<Tasks>;
+describe('TasksPage', () => {
+  let component: TasksPage;
+  let fixture: ComponentFixture<TasksPage>;
   let httpClient: HttpTestingController;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Tasks],
+      imports: [TasksPage],
       providers: [provideHttpClientTesting()],
     }).compileComponents();
 
     httpClient = TestBed.inject(HttpTestingController);
 
-    fixture = TestBed.createComponent(Tasks);
+    fixture = TestBed.createComponent(TasksPage);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

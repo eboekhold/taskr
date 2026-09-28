@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { TaskList } from '../task-list/task-list';
 
 @Component({
-  selector: 'app-tasks',
+  selector: 'app-tasks-page',
   imports: [TaskList],
-  templateUrl: './tasks.html',
-  styleUrl: './tasks.scss',
+  templateUrl: './tasks-page.html',
+  styleUrl: './tasks-page.scss',
 })
-export class Tasks { }
+export class TasksPage { }

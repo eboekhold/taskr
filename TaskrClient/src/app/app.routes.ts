@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { RandomTaskPage } from './random-task-page/random-task-page';
-import { Tasks } from './tasks/tasks';
+import { TasksPage } from './tasks-page/tasks-page';
 import { TaskPage } from './task-page/task-page';
 
 export const routes: Routes = [
@@ -10,7 +10,7 @@ export const routes: Routes = [
   },
   {
     path: 'tasks',
-    component: Tasks,
+    component: TasksPage,
   },
   {
     path: 'tasks/:id',
