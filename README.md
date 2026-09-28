@@ -27,39 +27,41 @@ npm install
 npm install
 ```
 
-### Database
-Initialise database connection string secret:
+### Secrets
+#### Database credentials
 ```
 > dotnet user-secrets init
 > dotnet user-secrets set ConnectionStrings:DefaultConnection "Server=localhost;Database=<database_name>;User Id=<user_name> Password=<password>;TrustServerCertificate=True"
 ```
 
-Create the database
-```
-> dotnet ef database create
-```
+#### HTTPS (optional)
+Trust the self-signed certificate for https support:
 
-Trust the self-signed certificate for https support (optional):
 ```
 > dotnet dev-certs https --trust
 ```
 
+### Database
+```
+> dotnet ef database update
+```
+
 ## Testing
 
-#### Backend/API:
+### Backend/API:
 > Ensure you have Docker running. 
 
 ```
 dotnet test --project TaskrApi.Testing/Integration
 ```
 
-#### Frontend:
+### Frontend:
 ```
 cd TaskrClient
 ng test
 ```
 
-#### End to end:
+### End to end:
 > Ensure you have Docker running. 
 
 ```
@@ -67,7 +69,7 @@ npx playwright test
 ```
 
 ## Running the application
-#### Server:
+### Server:
 ```
 > dotnet run --project TaskrApi
 
@@ -75,7 +77,7 @@ npx playwright test
 > dotnet run --project TaskrApi --launch-profile https
 ```
 
-#### Client:
+### Client:
 ```
 > cd TaskrClient
 > npm run start
